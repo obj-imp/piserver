@@ -49,12 +49,12 @@
   - Disables opportunistic locks (`oplocks`, `level2 oplocks`) and enables `strict locking` to avoid DOS file corruption scenarios.
 
 ## Security Considerations
-- SMB1, NTLM, and LANMAN authentication are insecure by modern standards; isolate this Pi on a trusted VLAN/subnet without Internet exposure.
+- SMB1, NTLM, LANMAN, and plaintext/weak credential fallbacks are insecure by modern standards; isolate this Pi on a trusted VLAN/subnet without Internet exposure.
 - Guest write access is enabled by default; disable `guest ok` in `config/smb.conf` if the environment changes.
 - The fixed credentials should be updated (`SMB_PASS=... ./scripts/setup.sh`) if threat models evolve.
 
 ## Validation & Testing
-- `testparm -s /etc/samba/smb.conf` runs automatically during setup to catch syntax issues (ensure `server min protocol = NT1` so the DOS share can negotiate).
+- `testparm -s /etc/samba/smb.conf` runs automatically during setup to catch syntax issues (ensure `server min protocol = NT1`, LANMAN, and plaintext auth allowances are present so DOS can negotiate).
 - After deployment, validate from:
   - Windows/macOS: `smb://<SERVER_NAME>/CNC` or `\\<SERVER_NAME>\CNC`.
   - Linux: `smbclient -L //<SERVER_NAME> -U piserver%piserver`.

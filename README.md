@@ -55,7 +55,7 @@ Both shares write to the same `/srv/CNC` directory and allow read/write access e
 
 ## Security Notes
 
-- SMB1/NT1 and LANMAN/NTLM authentication are enabled globally so DOS can negotiate. Modern OSes still prefer SMB2/3 automatically, but the Pi should remain on an isolated, trusted network segment.
+- SMB1/NT1 plus LANMAN/NTLM and even plaintext fallback auth are enabled globally so DOS clients can negotiate. Modern OSes still pick SMB2/3 automatically, but the Pi should stay on an isolated, trusted network segment.
 - The `piserver` credentials are intentionally weak per requirements. Change `SMB_PASS` (and rerun the script) if conditions change.
 
 ## Repository Contents
