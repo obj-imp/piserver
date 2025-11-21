@@ -87,8 +87,8 @@ enable_services() {
 main() {
   ensure_packages
   ensure_group
-  prepare_share
   ensure_user
+  prepare_share
   configure_samba
   configure_credentials
   enable_services
