@@ -3,7 +3,7 @@
 This repo contains everything needed to turn a Raspberry Pi 4/5 (headless) into a dual-stack file server for legacy DOS CNC machines and modern Windows/macOS clients. A single directory named `CNC` is exposed twice through Samba:
 
 - `\\<SERVER_NAME>\CNC` — modern SMB2+/SMB3 share for Windows/macOS/Linux
-- `\\<SERVER_NAME>\CNC-SMB1` — legacy SMB1 share for DOS systems that require NT1
+- `\\<SERVER_NAME>\CNCSMB1` — legacy SMB1 share for DOS systems that require NT1 (hyphen removed for compatibility)
 
 Both shares write to the same `/srv/CNC` directory and allow read/write access either as the guest account or with the hard-coded credentials `piserver / piserver` (per the requested captive-environment setup).
 
@@ -43,7 +43,7 @@ Both shares write to the same `/srv/CNC` directory and allow read/write access e
   - Map the share `\\<SERVER_NAME>\CNC`
   - Authenticate with `piserver / piserver` or connect as a guest
 - **DOS CNC machines**
-  - Use the SMB1-only share `\\<SERVER_NAME>\CNC-SMB1`
+  - Use the SMB1-only share `\\<SERVER_NAME>\CNCSMB1`
   - Guest access is enabled for ease of use; credentials also work if supported
 
 ## Common Maintenance Tasks
@@ -61,6 +61,7 @@ Both shares write to the same `/srv/CNC` directory and allow read/write access e
 ## Repository Contents
 
 - `scripts/setup.sh` — end-to-end installer/configurator
+- `scripts/diagnostics.sh` — quick helper to dump Samba config/log info
 - `config/smb.conf` — Samba configuration template applied by the script
 - `spec.md` — architecture and implementation details
 

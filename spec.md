@@ -43,8 +43,8 @@
   - Accessible at `\\SERVER\CNC`.
   - Still allows guest connections but supports authenticated sessions with `piserver / piserver`.
   - Forces ownership to `piserver:cncshare`, inherits permissions, and keeps SMB dialect >= SMB2.
-- **Legacy share `[CNC-SMB1]`**
-  - Accessible at `\\SERVER\CNC-SMB1`.
+- **Legacy share `[CNCSMB1]`**
+  - Accessible at `\\SERVER\CNCSMB1` (hyphen removed for stricter DOS stacks).
   - Forces NT1 on the share via `server min/max protocol = NT1`.
   - Disables opportunistic locks (`oplocks`, `level2 oplocks`) and enables `strict locking` to avoid DOS file corruption scenarios.
 
@@ -58,7 +58,7 @@
 - After deployment, validate from:
   - Windows/macOS: `smb://<SERVER_NAME>/CNC` or `\\<SERVER_NAME>\CNC`.
   - Linux: `smbclient -L //<SERVER_NAME> -U piserver%piserver`.
-  - DOS: use existing SMB1-capable client to mount `\\<SERVER_NAME>\CNC-SMB1`.
+  - DOS: use existing SMB1-capable client to mount `\\<SERVER_NAME>\CNCSMB1`.
 
 ## Future Enhancements
 - Optionally add an rsync/backup script for the `/srv/CNC` directory.

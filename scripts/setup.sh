@@ -92,7 +92,7 @@ main() {
   configure_samba
   configure_credentials
   enable_services
-  info "DONE! CNC share available as //${SERVER_NAME}/CNC and //${SERVER_NAME}/CNC-SMB1"
+  info "DONE! CNC share available as //${SERVER_NAME}/CNC and //${SERVER_NAME}/CNCSMB1"
   info "Connect with username '$SMB_USER' and password '$SMB_PASS' or use guest access."
 }
 
