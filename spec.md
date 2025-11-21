@@ -42,10 +42,10 @@
 - **Modern share `[CNC]`**
   - Accessible at `\\SERVER\CNC`.
   - Still allows guest connections but supports authenticated sessions with `piserver / piserver`.
-  - Forces ownership to `piserver:cncshare`, inherits permissions, and keeps SMB dialect >= SMB2.
+  - Forces ownership to `piserver:cncshare`, inherits permissions, and relies on client-side dialect selection (SMB2+/SMB3 preferred even though SMB1 remains globally enabled).
 - **Legacy share `[CNCSMB1]`**
   - Accessible at `\\SERVER\CNCSMB1` (hyphen removed for stricter DOS stacks).
-  - Forces NT1 on the share via `server min/max protocol = NT1`.
+  - Shares the same backing directory while relying on the server-wide `server min protocol = NT1` so DOS clients can negotiate.
   - Disables opportunistic locks (`oplocks`, `level2 oplocks`) and enables `strict locking` to avoid DOS file corruption scenarios.
 
 ## Security Considerations
@@ -54,7 +54,7 @@
 - The fixed credentials should be updated (`SMB_PASS=... ./scripts/setup.sh`) if threat models evolve.
 
 ## Validation & Testing
-- `testparm -s /etc/samba/smb.conf` runs automatically during setup to catch syntax issues.
+- `testparm -s /etc/samba/smb.conf` runs automatically during setup to catch syntax issues (ensure `server min protocol = NT1` so the DOS share can negotiate).
 - After deployment, validate from:
   - Windows/macOS: `smb://<SERVER_NAME>/CNC` or `\\<SERVER_NAME>\CNC`.
   - Linux: `smbclient -L //<SERVER_NAME> -U piserver%piserver`.
